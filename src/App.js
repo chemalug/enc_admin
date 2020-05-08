@@ -4,15 +4,15 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 
-import configurationStore from "./Store";
-import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/auth.action";
+import configurationStore from "Store";
+import setAuthToken from "utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "actions/auth.action";
 
-import Landing from "./components/layout/Landing";
-import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
-import PrivateRoute from "./components/private-route/PrivateRoute";
-import Dashboard from "./components/dashboard/Dashboard";
+import Landing from "components/layout/Landing";
+import Login from "components/auth/Login";
+import Register from "components/auth/Register";
+import PrivateRoute from "components/private-route/PrivateRoute";
+import Dashboard from "components/dashboard/Dashboard";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
