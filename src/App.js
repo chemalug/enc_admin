@@ -1,5 +1,7 @@
-import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 
 import configurationStore from "./Store";
@@ -7,9 +9,12 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/auth.action";
 
 import Landing from "./components/layout/Landing";
+import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import { Provider } from "react-redux";
+import PrivateRoute from "./components/private-route/PrivateRoute";
+import Dashboard from "./components/dashboard/Dashboard";
 
+// Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
   const token = localStorage.jwtToken;
@@ -28,15 +33,20 @@ if (localStorage.jwtToken) {
   }
 }
 
-function App() {
-  return (
-    <Provider store={configurationStore}>
-      <BrowserRouter>
-        <Route path="/" component={Landing} />
-        <Route exact path="/auth/register" component={Register} />
-      </BrowserRouter>
-    </Provider>
-  );
+class App extends Component {
+  render() {
+    return (
+      <Provider store={configurationStore}>
+        <Router>
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/auth/register" component={Register} />
+          <Route exact path="/auth/login" component={Login} />
+          <Switch>
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          </Switch>
+        </Router>
+      </Provider>
+    );
+  }
 }
-
 export default App;
