@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
+  "engines": {
+    "node": "10.16.3"
+  },
   "dependencies": {
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
