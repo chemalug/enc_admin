@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  HashRouter,
+} from "react-router-dom";
 
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
@@ -38,16 +43,16 @@ const hist = createBrowserHistory();
 class App extends Component {
   render() {
     return (
-      <Provider store={configurationStore}>
-        <Router history={hist}>
+      <HashRouter>
+        <Provider store={configurationStore}>
           <Route exact path="/" component={Landing} />
           <Route exact path="/auth/register" component={Register} />
           <Route exact path="/auth/login" component={Login} />
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>
-        </Router>
-      </Provider>
+        </Provider>
+      </HashRouter>
     );
   }
 }
