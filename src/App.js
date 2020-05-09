@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
+import { createBrowserHistory } from "history";
 
 import configurationStore from "Store";
 import setAuthToken from "utils/setAuthToken";
@@ -33,11 +34,12 @@ if (localStorage.jwtToken) {
   }
 }
 
+const hist = createBrowserHistory();
 class App extends Component {
   render() {
     return (
       <Provider store={configurationStore}>
-        <Router>
+        <Router history={hist}>
           <Route exact path="/" component={Landing} />
           <Route exact path="/auth/register" component={Register} />
           <Route exact path="/auth/login" component={Login} />
