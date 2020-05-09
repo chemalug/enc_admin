@@ -39,11 +39,6 @@ class Dcontent extends Component {
                     <div id="lastmonthchart"></div>
                   </div>
                 </div>
-                <div className="">
-                  <button className="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10">
-                    <i className="ti-settings text-white"></i>
-                  </button>
-                </div>
               </div>
             </div>
           </div>
