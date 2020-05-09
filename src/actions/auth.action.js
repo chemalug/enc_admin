@@ -17,8 +17,6 @@ export const loginUser = (userData) => (dispatch) => {
   axios
     .post("https://enc-authentication.herokuapp.com/api/auth/login", userData)
     .then((res) => {
-      console.log(res.data);
-
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
       setAuthToken(token);
