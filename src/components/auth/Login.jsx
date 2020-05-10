@@ -4,6 +4,17 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { loginUser } from "actions/auth.action";
+import {
+  Col,
+  Card,
+  CardBody,
+  Form,
+  FormGroup,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Row,
+} from "reactstrap";
 
 class Login extends Component {
   constructor() {
@@ -16,15 +27,19 @@ class Login extends Component {
   }
 
   componentDidMount() {
+    document.body.classList.remove("bg-dark");
+
     if (this.props.auth.isAuthenticated) {
-      console.log("asasa");
-      this.props.history.push("/dashboard");
+      this.props.history.push("/admin");
     }
+  }
+  componentWillUnmount() {
+    document.body.classList.remove("bg-dark");
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/admin");
     }
     if (nextProps.errors) {
       this.setState({
@@ -49,137 +64,84 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <div>
-        <section id="wrapper">
-          <div className="bg-dark login-register">
-            <div className="login-box card">
-              <div className="card-body">
-                <form
-                  noValidate
-                  onSubmit={this.onSubmit}
-                  className="form-horizontal form-material"
-                  id="loginform"
-                >
-                  <Link
-                    to="https://www.encodely.dev"
-                    className="text-center db"
-                  >
-                    <img
-                      src={require("assets/images/brand/logow-alt.png")}
-                      alt="Logo"
-                    />
-                  </Link>
-                  <h3 className="box-title m-b-20">Encodely | Educator</h3>
-                  <div className="form-group ">
-                    <div className="col-xs-12">
-                      <input
-                        onChange={this.onChange}
-                        value={this.state.email}
-                        errors={errors.email}
-                        id="email"
-                        className="form-control"
-                        type="email"
-                        placeholder="Email"
-                      />
-                      <span className="red-text">
-                        {errors.email}
-                        {errors.emailnotfound}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <div className="col-xs-12">
-                      <input
-                        onChange={this.onChange}
-                        value={this.state.password}
-                        errors={errors.password}
-                        id="password"
-                        className="form-control"
-                        type="password"
-                        placeholder="Password"
-                      />
-                      <span className="red-text">
-                        {errors.password}
-                        {errors.passwordincorrect}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <div className="d-flex no-block align-items-center">
-                      <div className="ml-auto">
-                        <Link
-                          to="/auth/recoverpwd"
-                          id="to-recover"
-                          className="text-muted"
-                        >
-                          <i className="fa fa-lock m-r-5"></i> Recover password
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="form-group text-center m-t-20">
-                    <div className="col-xs-12">
-                      <button
-                        className="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
-                        type="submit"
-                      >
-                        Ingresar
-                      </button>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
-                      <div className="social"></div>
-                    </div>
-                  </div>
-                  <div className="form-group m-b-0">
-                    <div className="col-sm-12 text-center">
-                      No tienes cuenta?{" "}
-                      <Link to="/auth/register" className="text-info m-l-5">
-                        <b>Registrarme</b>
-                      </Link>
-                    </div>
-                  </div>
-                </form>
-                <form
-                  className="form-horizontal"
-                  id="recoverform"
-                  action="index.html"
-                >
-                  <div className="form-group ">
-                    <div className="col-xs-12">
-                      <h3>Recover Password</h3>
-                      <p className="text-muted">
-                        Enter your Email and instructions will be sent to you!{" "}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="form-group ">
-                    <div className="col-xs-12">
-                      <input
-                        className="form-control"
-                        type="text"
-                        required=""
-                        placeholder="Email"
-                      />{" "}
-                    </div>
-                  </div>
-                  <div className="form-group text-center m-t-20">
-                    <div className="col-xs-12">
-                      <button
-                        className="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light"
-                        type="submit"
-                      >
-                        Reset
-                      </button>
-                    </div>
-                  </div>
-                </form>
+      <>
+        <Col lg="5" md="7">
+          <Card className="bg-dark shadow border-0">
+            <CardBody className="px-lg-5 py-lg-5">
+              <div className="text-center text-muted mb-4">
+                <small>Sign in with credentials</small>
               </div>
-            </div>
-          </div>
-        </section>
-      </div>
+              <Form onSubmit={this.onSubmit} role="form">
+                <FormGroup className="mb-3">
+                  <InputGroup className="input-group-alternative">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-email-83" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+
+                    <input
+                      onChange={this.onChange}
+                      value={this.state.email}
+                      errors={errors.email}
+                      id="email"
+                      className="form-control"
+                      type="email"
+                      placeholder="Email"
+                    />
+                    <span className="red-text">
+                      {errors.email}
+                      {errors.emailnotfound}
+                    </span>
+                  </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                  <InputGroup className="input-group-alternative">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-lock-circle-open" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <input
+                      onChange={this.onChange}
+                      value={this.state.password}
+                      errors={errors.password}
+                      id="password"
+                      className="form-control"
+                      type="password"
+                      placeholder="Password"
+                    />
+                    <span className="red-text">
+                      {errors.password}
+                      {errors.passwordincorrect}
+                    </span>
+                  </InputGroup>
+                </FormGroup>
+                <div className="text-center">
+                  <button
+                    className="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
+                    type="submit"
+                  >
+                    Ingresar
+                  </button>
+                </div>
+              </Form>
+            </CardBody>
+          </Card>
+          <Row className="mt-3">
+            <Col xs="6">
+              <Link className="text-black" to="/auth/forgotpassword">
+                <small className="font-weight-bold">Forgot password?</small>
+              </Link>
+            </Col>
+            <Col className="text-right" xs="6">
+              <Link className="text-dark" to="/auth/register">
+                <small>Create new account</small>
+              </Link>
+            </Col>
+          </Row>
+        </Col>
+      </>
     );
   }
 }

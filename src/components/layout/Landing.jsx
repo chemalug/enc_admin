@@ -1,63 +1,50 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
 
-export default function Landing() {
-  return (
-    <div>
-      <section id="wrapper">
-        <div
-          className="login-register"
-          style={{
-            backgroundImage: `url(${require("assets/images/background/bg1.jpg")})`,
-          }}
-        >
-          <div className="login-box card">
-            <div className="card-body">
-              <form
-                className="form-horizontal form-material"
-                id="loginform"
-                action="index.html"
-              >
-                <div className="form-group">
-                  <div className="col-xs-12 text-center">
-                    <div className="user-thumb text-center">
-                      {" "}
-                      <img
-                        alt="thumbnail"
-                        className="img-circle"
-                        width="100"
-                        src={require("assets/images/brand/logow-alt.png")}
-                      />
-                      <h3>Encodely | Dashboard</h3>
-                    </div>
-                  </div>
-                </div>
+import { connect } from "react-redux";
 
-                <div className="form-group text-center">
-                  <div className="col-xs-12">
-                    <Link
-                      to="/auth/register"
-                      className="btn btn-warning btn-lg btn-block text-uppercase waves-effect waves-light"
-                    >
-                      Register
-                    </Link>
-                  </div>
-                </div>
-                <div className="form-group text-center">
-                  <div className="col-xs-12">
-                    <Link
-                      to="/auth/login"
-                      className="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
-                    >
-                      Login
-                    </Link>
-                  </div>
-                </div>
-              </form>
-            </div>
+import { Container, Row, Col } from "reactstrap";
+
+import AuthNavbar from "components/Navbars/AuthNavbar.jsx";
+
+class Landing extends Component {
+  componentDidMount() {
+    document.body.classList.add("bg-dark");
+  }
+  /*componentWillUnmount() {
+    document.body.classList.remove("bg-dark");
+  }*/
+
+  render() {
+    /*if (this.props.authState.loggedIn) {
+      return <Redirect to="/admin/user-profile" />;
+    }*/
+    return (
+      <>
+        <div className="main-content">
+          <AuthNavbar />
+          <div className="header bg-dark py-7 py-lg-8">
+            <Container>
+              <div className="header-body text-center mb-7">
+                <Row className="justify-content-center">
+                  <Col lg="5" md="6">
+                    <h1 className="text-white">Encodely | Educator</h1>
+                    <p className="text-lead text-light">
+                      Plataforma para aprendizaje online
+                    </p>
+                  </Col>
+                </Row>
+              </div>
+            </Container>
           </div>
         </div>
-      </section>
-    </div>
-  );
+      </>
+    );
+  }
 }
+
+const mapStateToProps = (state) => ({
+  ...state,
+});
+
+export default connect(mapStateToProps, {})(Landing);

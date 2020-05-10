@@ -1,13 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 class Daside extends React.Component {
-  constructor() {
-    super();
-  }
-
   render() {
     const { user } = this.props;
     return (
@@ -20,17 +14,8 @@ class Daside extends React.Component {
           <div className="scroll-sidebar">
             {/*-- User profile -->*/}
             <div className="user-profile">
-              {/*-- User profile image -->*/}
-              <div className="profile-img">
-                {" "}
-                <img
-                  src={require("assets/images/brand/logo.png")}
-                  alt="user"
-                />{" "}
-              </div>
               {/*-- User profile text-->*/}
               <div className="profile-text">
-                {" "}
                 <Link to="/dashboard" className="" role="button">
                   {user.name}
                 </Link>

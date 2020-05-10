@@ -1,19 +1,22 @@
 import React, { Component } from "react";
-import { Router, Route, Switch, HashRouter } from "react-router-dom";
+import { HashRouter, Route, Switch, BrowserRouter } from "react-router-dom";
 
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
-import { createBrowserHistory } from "history";
+
+import "assets/vendor/nucleo/css/nucleo.css";
+import "assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
+import "assets/scss/argon-dashboard-react.scss";
 
 import configurationStore from "Store";
 import setAuthToken from "utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "actions/auth.action";
 
 import Landing from "components/layout/Landing";
-import Login from "components/auth/Login";
-import Register from "components/auth/Register";
+import AuthLayout from "components/auth/Auth";
+import AdminLayout from "components/admin/Admin";
+
 import PrivateRoute from "components/private-route/PrivateRoute";
-import Dashboard from "components/dashboard/Dashboard";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -34,20 +37,28 @@ if (localStorage.jwtToken) {
   }
 }
 
-const hist = createBrowserHistory();
 class App extends Component {
   render() {
     return (
-      <Router history={hist}>
-        <Provider store={configurationStore}>
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/auth/register" component={Register} />
-          <Route exact path="/auth/login" component={Login} />
+      <Provider store={configurationStore}>
+        <HashRouter>
           <Switch>
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
+            <Route
+              path="/admin"
+              render={(props) => <AdminLayout {...props} />}
+            />
+            <Route exac path="/" render={(props) => <Landing {...props} />} />
+            {/*            <Switch>
+              <PrivateRoute
+                exac
+                path="/admin"
+                render={(props) => <AdminLayout {...props} />}
+              />
+</Switch>*/}
           </Switch>
-        </Provider>
-      </Router>
+        </HashRouter>
+      </Provider>
     );
   }
 }

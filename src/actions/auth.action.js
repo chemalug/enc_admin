@@ -9,13 +9,14 @@ export const registerUser = (userData, history) => (dispatch) => {
       "https://enc-authentication.herokuapp.com/api/auth/register",
       userData
     )
-    .then((res) => history.push("/login"))
+    .then((res) => history.push("/auth/login"))
     .catch((err) => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };
 
 export const loginUser = (userData) => (dispatch) => {
   axios
-    .post("https://enc-authentication.herokuapp.com/api/auth/login", userData)
+    //.post("https://enc-authentication.herokuapp.com/api/auth/login", userData)
+    .post("http://localhost:3000/api/auth/login", userData)
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
