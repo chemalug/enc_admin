@@ -34,7 +34,7 @@ class AdminNavbar extends React.Component {
     return (
       <>
         <Navbar
-          className="navbar-top bg-dark navbar-dark"
+          className="navbar-top navbar-dark bg-gradient-info"
           expand="md"
           id="navbar-main"
         >
