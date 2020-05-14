@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import Dashboard from "./dashboard/dashboard_admin/Dashboard";
+import Dashboard from "components/dashboard/admin/Dashboard";
 
 class Admin extends Component {
   render() {

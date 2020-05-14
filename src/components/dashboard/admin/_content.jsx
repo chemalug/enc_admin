@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 
-import Users from "components/users/index.users";
+import Users from "views/admin/Schools/index.school";
 class Dcontent extends Component {
   render() {
     let year = new Date();

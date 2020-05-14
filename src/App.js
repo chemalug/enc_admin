@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { HashRouter, Route, Switch, BrowserRouter } from "react-router-dom";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
@@ -8,15 +8,13 @@ import "assets/vendor/nucleo/css/nucleo.css";
 import "assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/scss/argon-dashboard-react.scss";
 
-import configurationStore from "Store";
+import configurationStore from "utils/Store";
 import setAuthToken from "utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "actions/auth.action";
 
-import Landing from "components/layout/Landing";
+import Landing from "views/layout/Landing";
 import AuthLayout from "components/auth/Auth";
-import AdminLayout from "components/admin/Admin";
-
-import PrivateRoute from "components/private-route/PrivateRoute";
+import AdminLayout from "views/admin/Admin";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -41,7 +39,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={configurationStore}>
-        <HashRouter>
+        <BrowserRouter>
           <Switch>
             <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
             <Route
@@ -49,15 +47,8 @@ class App extends Component {
               render={(props) => <AdminLayout {...props} />}
             />
             <Route exac path="/" render={(props) => <Landing {...props} />} />
-            {/*            <Switch>
-              <PrivateRoute
-                exac
-                path="/admin"
-                render={(props) => <AdminLayout {...props} />}
-              />
-</Switch>*/}
           </Switch>
-        </HashRouter>
+        </BrowserRouter>
       </Provider>
     );
   }

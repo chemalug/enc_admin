@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 
 import { loginUser } from "actions/auth.action";
 import {
@@ -14,64 +13,51 @@ import {
   InputGroupAddon,
   InputGroupText,
   Row,
+  Container,
 } from "reactstrap";
 
-class Login extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: "",
-      password: "",
-      errors: {},
-    };
-  }
+import AuthNavbar from "components/Navbars/AuthNavbar";
 
-  componentDidMount() {
-    document.body.classList.remove("bg-dark");
+const Login = (props) => {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [errors, setErrors] = React.useState({});
 
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/admin");
-    }
-  }
-  componentWillUnmount() {
-    document.body.classList.remove("bg-dark");
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/admin");
-    }
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors,
-      });
-    }
-  }
-
-  onChange = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
-
-  onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    const userData = {
-      email: this.state.email,
-      password: this.state.password,
-    };
-    this.props.loginUser(userData);
+    props.loginUser({ email: email, password: password });
+    console.log(props);
   };
 
-  render() {
-    const { errors } = this.state;
-    return (
-      <>
+  React.useEffect(() => {
+    if (props.auth.isAuthenticated) {
+      props.history.push("/admin");
+    }
+  });
+
+  return (
+    <div>
+      <div className="pt-5 pt-lg-5">
+        <AuthNavbar />
+        <Container>
+          <div className="header-body text-center mb-7">
+            <Row className="justify-content-center">
+              <Col lg="5" md="6">
+                <h1 className="text-white">Encodely | Educator</h1>
+                <p className="text-lead text-light">Ingreso</p>
+              </Col>
+            </Row>
+          </div>
+        </Container>
+      </div>
+      <Row className="justify-content-center">
         <Col lg="5" md="7">
           <Card className="bg-dark shadow border-0">
             <CardBody className="px-lg-5 py-lg-5">
               <div className="text-center text-muted mb-4">
                 <small>Sign in with credentials</small>
               </div>
-              <Form onSubmit={this.onSubmit} role="form">
+              <Form onSubmit={onSubmit} role="form">
                 <FormGroup className="mb-3">
                   <InputGroup className="input-group-alternative">
                     <InputGroupAddon addonType="prepend">
@@ -81,8 +67,8 @@ class Login extends Component {
                     </InputGroupAddon>
 
                     <input
-                      onChange={this.onChange}
-                      value={this.state.email}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       errors={errors.email}
                       id="email"
                       className="form-control"
@@ -103,8 +89,8 @@ class Login extends Component {
                       </InputGroupText>
                     </InputGroupAddon>
                     <input
-                      onChange={this.onChange}
-                      value={this.state.password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      value={password}
                       errors={errors.password}
                       id="password"
                       className="form-control"
@@ -130,26 +116,20 @@ class Login extends Component {
           </Card>
           <Row className="mt-3">
             <Col xs="6">
-              <Link className="text-black" to="/auth/forgotpassword">
+              <Link className="text-light" to="/auth/forgotpassword">
                 <small className="font-weight-bold">Forgot password?</small>
               </Link>
             </Col>
             <Col className="text-right" xs="6">
-              <Link className="text-dark" to="/auth/register">
-                <small>Create new account</small>
+              <Link className="text-white" to="/auth/register">
+                <small className="font-weight-bold">Create new account</small>
               </Link>
             </Col>
           </Row>
         </Col>
-      </>
-    );
-  }
-}
-
-Login.propTypes = {
-  loginUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
+      </Row>
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => ({

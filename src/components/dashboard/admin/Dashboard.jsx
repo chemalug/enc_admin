@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "actions/auth.action";
 import Dheader from "../_header";
 import Daside from "./_aside";
-import Dcontent from "../_content";
+import Dcontent from "./_content";
 
 class Dashboard extends Component {
   onLogoutClick = (e) => {

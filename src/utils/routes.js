@@ -18,14 +18,14 @@
 
 import Register from "components/auth/Register";
 import Login from "components/auth/Login";
-import Users from "components/Users/index.users";
+import Schools from "views/admin/Schools/index.school";
 
 var routes = [
   {
-    path: "/users",
-    name: "Usuarios",
-    icon: "fa fa-users text-success",
-    component: Users,
+    path: "/Schools",
+    name: "Colegios",
+    icon: "fas fa-school text-success",
+    component: Schools,
     layout: "/admin",
     rol: "admin",
   },

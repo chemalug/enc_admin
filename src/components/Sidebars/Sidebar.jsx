@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-/*eslint-disable*/
 import React from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
@@ -32,34 +14,19 @@ import {
   Container,
 } from "reactstrap";
 
-var ps;
+const Sidebar = (props) => {
+  const [collapseOpen, setCollapseOpen] = React.useState(false);
 
-class Sidebar extends React.Component {
-  state = {
-    collapseOpen: false,
-  };
-  constructor(props) {
-    super(props);
-    this.activeRoute.bind(this);
-  }
-  // verifies if routeName is the one active (in browser input)
-  activeRoute(routeName) {
-    return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  }
   // toggles collapse between opened and closed (true/false)
-  toggleCollapse = () => {
-    this.setState({
-      collapseOpen: !this.state.collapseOpen,
-    });
+  const toggleCollapse = () => {
+    setCollapseOpen(!collapseOpen);
   };
   // closes the collapse
-  closeCollapse = () => {
-    this.setState({
-      collapseOpen: false,
-    });
+  const closeCollapse = () => {
+    setCollapseOpen(false);
   };
   // creates the links that appear in the left menu / Sidebar
-  createLinks = (routes) => {
+  const createLinks = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
         return (
@@ -67,8 +34,8 @@ class Sidebar extends React.Component {
             <NavLink
               to={prop.layout + prop.path}
               tag={NavLinkRRD}
-              onClick={this.closeCollapse}
               activeClassName="active"
+              onClick={closeCollapse}
             >
               <i className={prop.icon} />
               {prop.name}
@@ -80,65 +47,63 @@ class Sidebar extends React.Component {
       }
     });
   };
-  render() {
-    const { bgColor, routes, logo } = this.props;
-    let navbarBrandProps;
-    if (logo && logo.innerLink) {
-      navbarBrandProps = {
-        to: logo.innerLink,
-        tag: Link,
-      };
-    } else if (logo && logo.outterLink) {
-      navbarBrandProps = {
-        href: logo.outterLink,
-        target: "_blank",
-      };
-    }
-
-    return (
-      <Navbar
-        className="navbar-vertical fixed-left navbar-dark bg-dark"
-        expand="md"
-        id="sidenav-main"
-      >
-        <Container fluid>
-          {/* Toggler */}
-          <button
-            className="navbar-toggler"
-            type="button"
-            onClick={this.toggleCollapse}
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-          {/* Brand */}
-          {logo ? (
-            <NavbarBrand className="pt-0" {...navbarBrandProps}>
-              <img
-                alt={logo.imgAlt}
-                className="navbar-brand-img"
-                src={logo.imgSrc}
-                height="32"
-              />
-            </NavbarBrand>
-          ) : null}
-          {/* User */}
-
-          {/* Collapse */}
-          <Collapse navbar isOpen={this.state.collapseOpen}>
-            <Nav navbar></Nav>
-            {/* Navigation */}
-            <Nav navbar>{this.createLinks(routes)}</Nav>
-            {/* Divider */}
-            <hr className="my-3" />
-            {/* Heading */}
-            <h6 className="navbar-heading text-muted">Documentation</h6>
-            {/* Navigation */}
-          </Collapse>
-        </Container>
-      </Navbar>
-    );
+  const { bgColor, routes, logo } = props;
+  let navbarBrandProps;
+  if (logo && logo.innerLink) {
+    navbarBrandProps = {
+      to: logo.innerLink,
+      tag: Link,
+    };
+  } else if (logo && logo.outterLink) {
+    navbarBrandProps = {
+      href: logo.outterLink,
+      target: "_blank",
+    };
   }
-}
+
+  return (
+    <Navbar
+      className="navbar-vertical fixed-left navbar-dark "
+      expand="md"
+      id="sidenav-main"
+    >
+      <Container fluid>
+        {/* Toggler */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          onClick={toggleCollapse}
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+        {/* Brand */}
+        {logo ? (
+          <NavbarBrand className="pt-0" {...navbarBrandProps}>
+            <img
+              alt={logo.imgAlt}
+              className="navbar-brand-img"
+              src={logo.imgSrc}
+              height="32"
+            />
+          </NavbarBrand>
+        ) : null}
+        {/* User */}
+
+        {/* Collapse */}
+        <Collapse navbar isOpen={collapseOpen}>
+          <Nav navbar></Nav>
+          {/* Navigation */}
+          <Nav navbar>{createLinks(routes)}</Nav>
+          {/* Divider */}
+          <hr className="my-3" />
+          {/* Heading */}
+          <h6 className="navbar-heading text-muted">Documentation</h6>
+          {/* Navigation */}
+        </Collapse>
+      </Container>
+    </Navbar>
+  );
+};
 
 Sidebar.defaultProps = {
   routes: [{}],
