@@ -8,9 +8,9 @@ import "assets/vendor/nucleo/css/nucleo.css";
 import "assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/scss/argon-dashboard-react.scss";
 
-import configurationStore from "utils/Store";
+import configurationStore from "redux/Store";
 import setAuthToken from "utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "actions/auth.action";
+import { setCurrentUser, logoutUser } from "redux/actions/auth.action";
 
 import Landing from "views/layout/Landing";
 import AuthLayout from "components/auth/Auth";
@@ -24,12 +24,12 @@ if (localStorage.jwtToken) {
   // Decode token and get user info and exp
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
-  configurationStore.dispatch(setCurrentUser(decoded));
+  configurationStore().dispatch(setCurrentUser(decoded));
   // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {
     // Logout user
-    configurationStore.dispatch(logoutUser());
+    configurationStore().dispatch(logoutUser());
     // Redirect to login
     window.location.href = "/auth/login";
   }
@@ -38,7 +38,7 @@ if (localStorage.jwtToken) {
 class App extends Component {
   render() {
     return (
-      <Provider store={configurationStore}>
+      <Provider store={configurationStore()}>
         <BrowserRouter>
           <Switch>
             <Route path="/auth" render={(props) => <AuthLayout {...props} />} />

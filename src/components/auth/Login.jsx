@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { loginUser } from "actions/auth.action";
+import { loginUser } from "redux/actions/auth.action";
 import {
   Col,
   Card,
@@ -19,17 +19,18 @@ import {
 import AuthNavbar from "components/Navbars/AuthNavbar";
 
 const Login = (props) => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [errors, setErrors] = React.useState({});
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
   const onSubmit = (e) => {
+    setErrors(props.errors);
     e.preventDefault();
     props.loginUser({ email: email, password: password });
     console.log(props);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (props.auth.isAuthenticated) {
       props.history.push("/admin");
     }

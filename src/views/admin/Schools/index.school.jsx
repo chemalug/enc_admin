@@ -1,14 +1,16 @@
 import React from "react";
-
-import TableSchool from "./datatable.school";
-import Header from "./header.school";
+import { connect } from "react-redux";
 import { Container, Row, Card, CardHeader, CardBody } from "reactstrap";
+
+import { getSchools } from "redux/actions/school.action";
+import TableSchool from "components/Tables/datatable.admin";
+import Header from "components/Headers/header.admin";
 
 class Schools extends React.Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header labelButton={"Agregar Colegio"} icon={"fas fa-school"} />
         <Container className="mt--7" fluid>
           <Row>
             <div className="col">
@@ -18,6 +20,7 @@ class Schools extends React.Component {
                 </CardHeader>
                 <CardBody className="border-1">
                   <TableSchool />
+                  {/*props.getSchools.map((s) => console.log(s))*/}
                 </CardBody>
               </Card>
             </div>
@@ -26,6 +29,12 @@ class Schools extends React.Component {
       </div>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return {
+    schools: state.schools.loading === false ? [] : state.schools.map,
+  };
 }
 
 export default Schools;

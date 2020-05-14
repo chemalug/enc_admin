@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 // reactstrap components
 import {
   DropdownMenu,
@@ -20,7 +20,7 @@ import {
   Media,
 } from "reactstrap";
 
-import { logoutUser } from "actions/auth.action";
+import { logoutUser } from "redux/actions/auth.action";
 
 const AdminNavbar = (props) => {
   const onLogoutClick = (e) => {

@@ -1,8 +1,9 @@
 import React from "react";
-import { MDBDataTableV5, MDBBtn } from "mdbreact";
+import { MDBDataTableV5 } from "mdbreact";
 
-import axios from "axios";
-import { getSchools } from "services/schools.service";
+import { connect } from "react-redux";
+
+import { loadSchools } from "redux/actions/school.action";
 
 class TableSchool extends React.Component {
   state = {
@@ -10,26 +11,9 @@ class TableSchool extends React.Component {
   };
 
   componentDidMount() {
-    if (!!localStorage.jwtToken) {
-      try {
-        return axios
-          .get(`${process.env.REACT_APP_PROXY}/api/schools/`, {
-            headers: {
-              Authorization: localStorage.jwtToken,
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          })
-          .then((res) => {
-            const schools = res.data;
-            this.setState({ schools });
-          })
-          .catch((err) => console.log("asdfasdf" + err));
-      } catch (e) {
-        console.log(e.response.data);
-      }
-    }
+    this.props.loadSchools();
   }
+
   render() {
     const datatable = {
       columns: [
@@ -63,7 +47,7 @@ class TableSchool extends React.Component {
           width: 100,
         },
       ],
-      rows: this.state.schools.map((value) => {
+      /*rows: this.schools.map((value) => {
         return {
           name: <strong>{value.name}</strong>,
           email: value.email,
@@ -87,7 +71,7 @@ class TableSchool extends React.Component {
             </div>
           ),
         };
-      }),
+      }),*/
     };
 
     return (
@@ -108,4 +92,8 @@ class TableSchool extends React.Component {
   }
 }
 
-export default TableSchool;
+const mapStateToProps = (state) => ({
+  schools: state.schools,
+});
+
+export default connect(mapStateToProps, { loadSchools })(TableSchool);

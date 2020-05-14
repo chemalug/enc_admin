@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS } from "actions/types";
+import { LOGIN_SUCCESS } from "redux/actions/types";
 const isEmpty = require("is-empty");
 
 const initialState = {

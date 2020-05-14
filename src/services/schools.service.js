@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export function getSchools() {
+export const getSchoolsApi = () => {
   /**
    * ! Area de autenticación
    */
@@ -23,4 +23,4 @@ export function getSchools() {
       console.log(e.response.data);
     }
   }
-}
+};

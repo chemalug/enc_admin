@@ -1,15 +1,20 @@
-import * as actionTypes from "actions/types";
+import * as actionTypes from "redux/actions/types";
 
-const initialState = {};
+const initialState = {
+  schools: [],
+  loading: false,
+};
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case actionTypes.SCHOOLS_FETCH_LOADING:
+      return { ...state, loading: true };
     case actionTypes.SCHOOLS_FETCH_SUCCESS:
+      return action.schools;
     case actionTypes.SCHOOLS_FETCH_ONE_SUCCESS:
       return {
         ...state,
-        schools: action.payload,
-        loading: true,
+        school: action.payload,
       };
 
     default:
